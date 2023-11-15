@@ -175,6 +175,10 @@ unique_ptr<DuckDBPyRelation> PyConnectionWrapper::FromSubstrait(py::bytes &proto
 	return conn->FromSubstrait(proto);
 }
 
+unique_ptr<DuckDBPyRelation> PyConnectionWrapper::FromSparkconnect(py::bytes &proto, shared_ptr<DuckDBPyConnection> conn) {
+	return conn->FromSparkconnect(proto);
+}
+
 unique_ptr<DuckDBPyRelation> PyConnectionWrapper::FromSubstraitJSON(const string &json,
                                                                     shared_ptr<DuckDBPyConnection> conn) {
 	return conn->FromSubstraitJSON(json);

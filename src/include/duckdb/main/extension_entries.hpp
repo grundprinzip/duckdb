@@ -33,6 +33,7 @@ static constexpr ExtensionEntry EXTENSION_FUNCTIONS[] = {
     {"from_json", "json"},
     {"from_json_strict", "json"},
     {"from_substrait", "substrait"},
+    {"from_sparkconnect", "sparkconnect"},
     {"from_substrait_json", "substrait"},
     {"fuzz_all_functions", "sqlsmith"},
     {"fuzzyduck", "sqlsmith"},

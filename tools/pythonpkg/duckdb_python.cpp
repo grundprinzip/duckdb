@@ -155,6 +155,8 @@ static void InitializeConnectionMethods(py::module_ &m) {
 	      py::arg("connection") = py::none());
 	m.def("from_substrait", &PyConnectionWrapper::FromSubstrait, "Creates a query object from the substrait plan",
 	      py::arg("proto"), py::arg("connection") = py::none());
+	m.def("from_sparkconnect", &PyConnectionWrapper::FromSparkconnect, "Creates a query object from the sparkconnect plan",
+			  py::arg("proto"), py::arg("connection") = py::none());
 	m.def("get_substrait", &PyConnectionWrapper::GetSubstrait, "Serialize a query object to protobuf", py::arg("query"),
 	      py::arg("connection") = py::none(), py::kw_only(), py::arg("enable_optimizer") = true);
 	m.def("get_substrait_json", &PyConnectionWrapper::GetSubstraitJSON, "Serialize a query object to protobuf",
@@ -264,7 +266,9 @@ static void InitializeConnectionMethods(py::module_ &m) {
 	         "List registered filesystems, including builtin ones", py::arg("connection") = py::none())
 	    .def("filesystem_is_registered", &PyConnectionWrapper::FileSystemIsRegistered,
 	         "Check if a filesystem with the provided name is currently registered", py::arg("name"),
-	         py::arg("connection") = py::none());
+	         py::arg("connection") = py::none())
+	    .def("from_sparkconnect", &PyConnectionWrapper::FromSparkconnect, "Create a query object from protobuf plan",
+			  py::arg("proto"), py::arg("connection") = py::none());
 }
 
 PYBIND11_MODULE(DUCKDB_PYTHON_LIB_NAME, m) { // NOLINT

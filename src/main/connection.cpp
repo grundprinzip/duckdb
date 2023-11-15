@@ -91,6 +91,12 @@ DUCKDB_API unique_ptr<QueryResult> Connection::FromSubstrait(const string &proto
 	return TableFunction("from_substrait", params)->Execute();
 }
 
+DUCKDB_API unique_ptr<QueryResult> Connection::FromSparkconnect(const string &proto) {
+	vector<Value> params;
+	params.emplace_back(Value::BLOB_RAW(proto));
+	return TableFunction("from_sparkconnect", params)->Execute();
+}
+
 DUCKDB_API string Connection::GetSubstraitJSON(const string &query) {
 	vector<Value> params;
 	params.emplace_back(query);

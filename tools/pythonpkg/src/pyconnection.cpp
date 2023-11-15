@@ -250,7 +250,9 @@ static void InitializeConnectionMethods(py::class_<DuckDBPyConnection, shared_pt
 	    .def_property_readonly("rowcount", &DuckDBPyConnection::GetRowcount, "Get result set row count")
 	    .def("install_extension", &DuckDBPyConnection::InstallExtension, "Install an extension by name",
 	         py::arg("extension"), py::kw_only(), py::arg("force_install") = false)
-	    .def("load_extension", &DuckDBPyConnection::LoadExtension, "Load an installed extension", py::arg("extension"));
+	    .def("load_extension", &DuckDBPyConnection::LoadExtension, "Load an installed extension", py::arg("extension"))
+	    .def("from_sparkconnect", &DuckDBPyConnection::FromSparkconnect, "Create a query object from protobuf plan",
+			  py::arg("proto"));
 }
 
 void DuckDBPyConnection::UnregisterFilesystem(const py::str &name) {
@@ -1118,6 +1120,16 @@ unique_ptr<DuckDBPyRelation> DuckDBPyConnection::FromSubstrait(py::bytes &proto)
 	vector<Value> params;
 	params.emplace_back(Value::BLOB_RAW(proto));
 	return make_uniq<DuckDBPyRelation>(connection->TableFunction("from_substrait", params)->Alias(name));
+}
+
+unique_ptr<DuckDBPyRelation> DuckDBPyConnection::FromSparkconnect(py::bytes &proto) {
+	if (!connection) {
+		throw ConnectionException("Connection has already been closed");
+	}
+	string name = "sparkconnect_" + StringUtil::GenerateRandomName();
+	vector<Value> params;
+	params.emplace_back(Value::BLOB_RAW(proto));
+	return make_uniq<DuckDBPyRelation>(connection->TableFunction("from_sparkconnect", params)->Alias(name));
 }
 
 unique_ptr<DuckDBPyRelation> DuckDBPyConnection::GetSubstrait(const string &query, bool enable_optimizer) {

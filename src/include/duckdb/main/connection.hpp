@@ -146,6 +146,7 @@ public:
 	DUCKDB_API string GetSubstrait(const string &query);
 	//! Returns a Query Result from a substrait blob
 	DUCKDB_API unique_ptr<QueryResult> FromSubstrait(const string &proto);
+	DUCKDB_API unique_ptr<QueryResult> FromSparkconnect(const string &proto);
 	//! Returns a substrait BLOB from a valid query
 	DUCKDB_API string GetSubstraitJSON(const string &query);
 	//! Returns a Query Result from a substrait JSON

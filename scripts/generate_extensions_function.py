@@ -21,8 +21,9 @@ stored_functions = {
     'substrait': ["from_substrait", "get_substrait", "get_substrait_json", "from_substrait_json"],
     'arrow': ["scan_arrow_ipc", "to_arrow_ipc"],
     'spatial': [],
+    'sparkconnect': ['from_sparkconnect', ]
 }
-stored_settings = {'substrait': [], 'arrow': [], 'spatial': []}
+stored_settings = {'substrait': [], 'arrow': [], 'spatial': [], 'sparkconnect':[] }
 
 functions = {}
 

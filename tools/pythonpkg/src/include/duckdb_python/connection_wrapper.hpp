@@ -170,6 +170,8 @@ public:
 
 	static unique_ptr<DuckDBPyRelation> FromSubstrait(py::bytes &proto, shared_ptr<DuckDBPyConnection> conn = nullptr);
 
+	static unique_ptr<DuckDBPyRelation> FromSparkconnect(py::bytes &proto, shared_ptr<DuckDBPyConnection> conn = nullptr);
+
 	static unique_ptr<DuckDBPyRelation> FromSubstraitJSON(const string &json,
 	                                                      shared_ptr<DuckDBPyConnection> conn = nullptr);
 
